@@ -47,7 +47,7 @@ Take in consideration that I assume that you are running a local validator, if n
 
 All in instruction:
 ```bash
-solana airdrop 2 ~/.config/solana/id.json && clear && anchor build && clear && anchor deploy && clear && anchor run counter
+solana airdrop 10 ~/.config/solana/id.json && clear && anchor build && clear && anchor deploy && clear && anchor run counter
 ```
 
 Steps:
