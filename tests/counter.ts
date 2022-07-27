@@ -28,7 +28,7 @@ import { waitForDebugger } from "inspector";
     let account2PDA: anchor.web3.PublicKey;
     let account3 = anchor.web3.Keypair.generate();
     let account3PDA: anchor.web3.PublicKey;
-    let number_of_accounts = 100;
+    let number_of_accounts = 10;
     let airdrop_number =10;
     let cleon_theory_time = number_of_accounts/20;
     let balance_before = CounterProgram.provider.connection.getBalance(authority.publicKey);
