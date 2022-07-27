@@ -50,7 +50,7 @@ All in instruction:
 solana airdrop 10 ~/.config/solana/id.json && clear && anchor build && clear && anchor deploy && clear && anchor run counter
 ```
 
-Steps:
+Step by step:
 
 To build the smart contract programs:
 ```bash
