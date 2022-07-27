@@ -1,0 +1,16 @@
+[features]
+seeds = false
+[programs.localnet]
+whitelist = "6rXa5bDfjCLSX9ZGbGboDtm4yExBDkijAFjEwEGk3ZMR"
+counter = "41wqstn9QMyDvPDNvndusXmkhXy9Qx9kfjnLeEf4dDhj"
+[registry]
+url = "https://anchor.projectserum.com"
+
+[provider]
+cluster = "localnet"
+wallet = "~/.config/solana/id.json"
+
+[scripts]
+test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"
+whitelist = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/whitelist.ts"
+counter = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/counter.ts"
