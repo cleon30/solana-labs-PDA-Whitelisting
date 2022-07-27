@@ -47,7 +47,7 @@ Take in consideration that I assume that you are running a local validator, if n
 
 All in instruction:
 ```bash
-clear && anchor build && clear && anchor deploy && clear && anchor run counter
+solana airdrop 2 ~/.config/solana/id.json && clear && anchor build && clear && anchor deploy && clear && anchor run counter
 ```
 
 Steps:
@@ -55,6 +55,10 @@ Steps:
 To build the smart contract programs:
 ```bash
 anchor build
+```
+To have money to deploy
+```bash
+solana airdrop 2 ~/.config/solana/id.json
 ```
 To deploy the smart contract to Blockchain
 ```bash
