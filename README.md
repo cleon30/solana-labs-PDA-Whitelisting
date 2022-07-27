@@ -58,7 +58,7 @@ anchor build
 ```
 To have money to deploy
 ```bash
-solana airdrop 2 ~/.config/solana/id.json
+solana airdrop 10 ~/.config/solana/id.json
 ```
 To deploy the smart contract to Blockchain
 ```bash
