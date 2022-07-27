@@ -18,31 +18,51 @@ The Solana Whitelisting PDA contract is an open-source tool for developers in th
 ## Setting up your Localnet
 
 Set your config to localhost
-  1. `solana config set --url localhost`
+```bash
+solana config set --url localhost`
+```
 Then run in separate window
-  2. `solana-test-validator --reset`
+```bash
+solana-test-validator --reset
+````
 Also you can view all the program interactions with:
-  3. `solana logs`
+```bash
+solana logs
+```
 
 ## Installing Project & Dependencies 
 
 Set your config to localhost
-  1. `git clone https://github.com/cleon30/solana-labs-PDA-Whitelisting.git`
-  2. `cd solana-labs-PDA-Whitelisting.git`
-  3. `yarn add ts-mocha`
+```bash
+git clone https://github.com/cleon30/solana-labs-PDA-Whitelisting.git
+cd solana-labs-PDA-Whitelisting.git
+yarn add ts-mocha
+```
+Also if you don't have Anchor or npm or Solana, please follow these instructions: https://project-serum.github.io/anchor/getting-started/installation.html
 
-Also if you don't have Anchor or npm or Solana, please follow these instructions:
-https://project-serum.github.io/anchor/getting-started/installation.html
+## Running
 
-## Running 
+
 Take in consideration that I assume that you are running a local validator, if not follow localnet commands
 
 All in instruction:
-  1. `clear && anchor build && clear && anchor deploy && clear && anchor run counter`
+```bash
+clear && anchor build && clear && anchor deploy && clear && anchor run counter
+```
+
 Steps:
-  2. `anchor build`
-  3. `anchor deploy`
-  3. `anchor run counter`
 
+To build the smart contract programs:
+```bash
+anchor build
+```
+To deploy the smart contract to Blockchain
+```bash
+anchor deploy
+```
+To run the Counter testing
+```bash
+anchor run counter
+```
 
-  0xCleon
+0xCleon
