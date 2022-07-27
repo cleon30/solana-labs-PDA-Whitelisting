@@ -2,7 +2,7 @@
   <h1>
     <code>Solana Whitelisting PDA contract</code>
   </h1>
-  <strong>Whitelisting PDA</sup>
+
   
   <sub>
     Built in Solana using Anchor and 🦀  <a href="https://solana.com/es" target="_blank">Solana</a>
