@@ -19,7 +19,7 @@ The Solana Whitelisting PDA contract is an open-source tool for developers in th
 
 Set your config to localhost
 ```bash
-solana config set --url localhost`
+solana config set --url localhost
 ```
 Then run in separate window
 ```bash
