@@ -30,7 +30,7 @@ import { waitForDebugger } from "inspector";
     let account3PDA: anchor.web3.PublicKey;
     let number_of_accounts = 10;
     let airdrop_number =10;
-    let cleon_theory_time = number_of_accounts/20;
+    let cleon_theory_time = number_of_accounts/19;
     let balance_before = CounterProgram.provider.connection.getBalance(authority.publicKey);
     let whitelistedAccounts: Array<anchor.web3.Keypair> = [];
     for(let i = 0; i < number_of_accounts; ++i) 
