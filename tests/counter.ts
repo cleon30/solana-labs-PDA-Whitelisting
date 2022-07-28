@@ -286,7 +286,7 @@ import { waitForDebugger } from "inspector";
               [whitelist.publicKey.toBuffer(), wallet.publicKey.toBuffer()],
               WhitelistProgram.programId
             );
-        
+            
             try{
                 CounterProgram.methods
                 .manipulateAddress(wallet.publicKey, true)
@@ -300,12 +300,12 @@ import { waitForDebugger } from "inspector";
                 })
                 .signers([authority])
                 .rpc();
-                let counter = await CounterProgram.account.counter.fetch(counterPDA);
+               
             console.log("The account:", wallet.publicKey.toString(), "has been deleted from the whitelist")//," | total count;",counter.count.toNumber());
             } catch(e){
                 console.error("The program expected this account to be already initialized");
             }
-
+            
             
             
         }
