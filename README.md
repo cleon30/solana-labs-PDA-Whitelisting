@@ -69,6 +69,7 @@ To run the Counter testing
 anchor run counter
 ```
 Testing showcase
+
 <img width="721" alt="image" src="https://user-images.githubusercontent.com/62452212/181600768-3fbf9ff2-f083-4692-baa9-05063f85dd55.png">
 
 
