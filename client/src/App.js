@@ -14,9 +14,7 @@ import Papa from 'papaparse';
 async function airdrop(connection, destinationWallet, amount) {
   const airdropSignature = await connection.requestAirdrop(destinationWallet.publicKey, 
     amount * anchor.web3.LAMPORTS_PER_SOL);
-  
   const latestBlockHash = await connection.getLatestBlockhash();
-
   const tx = await connection.confirmTransaction({
     blockhash: latestBlockHash.blockhash,
     lastValidBlockHeight: latestBlockHash.lastValidBlockHeight,
@@ -30,11 +28,8 @@ async function airdrop(connection, destinationWallet, amount) {
 const App = () => {
   const [recipients, setRecipients] = useState([]);
   const [theCounterPDA, setTheCounterPDA] = useState(null);
-  // let authority = Keypair.generate();
   const [walletAddress, setWalletAddress] = useState(null);
   const  whitelist = anchor.web3.Keypair.generate();
-  const [wallet, setwallet] = useState(null);
-  const [signInfo, set] = useState(null);
   const [tableRows, setTableRows] = useState([]);
   const [values, setValues] = useState([]);
   const network = clusterApiUrl('devnet');
@@ -46,7 +41,6 @@ const App = () => {
   const checkIfWalletIsConnected = async () => {
     try {
       const { solana } = window;
-
       if (solana) {
         if (solana.isPhantom) {
           console.log('Phantom wallet found!');
@@ -54,11 +48,8 @@ const App = () => {
           console.log(
             'Connected with Public Key:',
             response.publicKey.toString()
-
           );
-   
-          
-          setwallet(response.publicKey);
+          setWalletAddress(response);
 
         }
       } else {
@@ -86,17 +77,12 @@ const App = () => {
         const addresses = [];
         results.data.map((d) => {
           rowsArray.push(Object.keys(d));
-  
           valuesArray.push(Object.values(d));
           addresses.push(Object.values(d)[0]);
-    
-          // string +="hello";
         });
-
       setTableRows(rowsArray[0]);
       setValues(valuesArray);
       setRecipients(addresses);
-      // console.log(addresses);
       },
     });
 
@@ -107,12 +93,14 @@ const App = () => {
     const program = new Program(idl1, CounterProgram, provider);
     const program2 = new Program(idl2, WhitelistProgram, provider);
     var recipients_length = recipients.length;
-    let position = 0;
     console.log("The publicKeys Added are:", recipients);
-    let [counterPDA, counterBump]= await anchor.web3.PublicKey.findProgramAddress(
+    let [counterPDA,]= await anchor.web3.PublicKey.findProgramAddress(
       [Buffer.from(anchor.utils.bytes.utf8.encode("counter")), walletAddress.publicKey.toBuffer()],
       program.programId
       );
+      setTheCounterPDA(counterPDA);
+      // setProgram(program);
+      // setProgram(program);
       console.log("whitelist is :", whitelist.publicKey.toString());
     // console.log(theCounterPDA.toString());
     
@@ -203,8 +191,7 @@ const App = () => {
     if (solana) {
       const response = await solana.connect();
       console.log('Connected with Public Key:', response.publicKey.toString());
-      // setwallet(response);
-      setWalletAddress(response);
+     
     }
   };
   const renderNotConnectedContainer = () => (
