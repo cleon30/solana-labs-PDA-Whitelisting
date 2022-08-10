@@ -30,9 +30,9 @@ async function airdrop(connection, destinationWallet, amount) {
 const App = () => {
   const [recipients, setRecipients] = useState([]);
   const [theCounterPDA, setTheCounterPDA] = useState(null);
-  let authority = Keypair.generate();
+  // let authority = Keypair.generate();
   const [walletAddress, setWalletAddress] = useState(null);
-  let whitelist = anchor.web3.Keypair.generate();
+  const  whitelist = anchor.web3.Keypair.generate();
   const [wallet, setwallet] = useState(null);
   const [signInfo, set] = useState(null);
   const [tableRows, setTableRows] = useState([]);
@@ -58,7 +58,7 @@ const App = () => {
           );
    
           
-          setwallet(response);
+          setwallet(response.publicKey);
 
         }
       } else {
@@ -102,13 +102,19 @@ const App = () => {
 
   };
   const sendAddress = async () => {
+    
     const provider = getProvider();
     const program = new Program(idl1, CounterProgram, provider);
     const program2 = new Program(idl2, WhitelistProgram, provider);
     var recipients_length = recipients.length;
     let position = 0;
     console.log("The publicKeys Added are:", recipients);
-    console.log(theCounterPDA.toString());
+    let [counterPDA, counterBump]= await anchor.web3.PublicKey.findProgramAddress(
+      [Buffer.from(anchor.utils.bytes.utf8.encode("counter")), walletAddress.publicKey.toBuffer()],
+      program.programId
+      );
+      console.log("whitelist is :", whitelist.publicKey.toString());
+    // console.log(theCounterPDA.toString());
     
       for (var i = 0; i < recipients_length; i++) {
         try{
@@ -118,18 +124,18 @@ const App = () => {
             program2.programId
           );
         
-          console.log(PDA.toString());
+          // console.log(PDA.toString());
           await program.methods
           .manipulateAddress(wallet2, false)
           .accounts({
-            authority: authority.publicKey,
-            counter: theCounterPDA,
+            authority: walletAddress.publicKey,
+            counter: counterPDA,
             pdaId: PDA,
             whitelisting: whitelist.publicKey,
             updateId: program2.programId,
             systemProgram: anchor.web3.SystemProgram.programId,
           })
-          .signers([authority])
+          .signers([])
           .rpc();
           console.log("Adding Address", wallet2.toString(),"to the whitelist");
           }
@@ -142,15 +148,15 @@ const App = () => {
   const provider = getProvider();
   const program = new Program(idl1, CounterProgram, provider);
   const program2 = new Program(idl2, WhitelistProgram, provider);
-    // const authorityAccount =new PublicKey(walletAddress);
+  // const authority =new PublicKey(walletAddress);
     
-    await airdrop(provider.connection, authority,2);
-    let initial = await program.provider.connection.getBalance(authority.publicKey);
+    await airdrop(provider.connection, walletAddress,2);
+    let initial = await program.provider.connection.getBalance(walletAddress.publicKey);
     console.log(initial);
     // console.log(initial);
 
     let [counterPDA, counterBump]= await anchor.web3.PublicKey.findProgramAddress(
-      [Buffer.from(anchor.utils.bytes.utf8.encode("counter")), authority.publicKey.toBuffer()],
+      [Buffer.from(anchor.utils.bytes.utf8.encode("counter")), walletAddress.publicKey.toBuffer()],
       program.programId
       );
       
@@ -160,11 +166,11 @@ const App = () => {
             await program.methods
             .initCounter(counterBump)
             .accounts({
-              authority: authority.publicKey,
+              authority: walletAddress.publicKey,
               counter: counterPDA,
               systemProgram: anchor.web3.SystemProgram.programId,
             })
-            .signers([authority])
+            .signers([])
             .rpc();
             let counter = await program.account.counter.fetch(counterPDA);
             console.log("Your counter PublicKey: ",counterPDA.toString());
@@ -173,13 +179,13 @@ const App = () => {
         await program.methods
             .pointToWhitelist()
             .accounts({
-              authority: authority.publicKey,
+              authority:walletAddress.publicKey,
               counter: counterPDA,
               whitelisting: whitelist.publicKey,
               pointerToWhitelistId: program2.programId,
               systemProgram: anchor.web3.SystemProgram.programId,
             })
-            .signers([authority, whitelist])
+            .signers([whitelist])
             .rpc();
             console.log("HELLO", counterPDA.toString());
             setTheCounterPDA(counterPDA);
@@ -197,8 +203,8 @@ const App = () => {
     if (solana) {
       const response = await solana.connect();
       console.log('Connected with Public Key:', response.publicKey.toString());
-      setwallet(response);
-      setWalletAddress(response.publicKey);
+      // setwallet(response);
+      setWalletAddress(response);
     }
   };
   const renderNotConnectedContainer = () => (
