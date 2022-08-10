@@ -144,71 +144,42 @@ async function airdrop(connection, destinationWallet, amount) {
 
     });
 
-    // it("Updates counter", async () => {
-    //   for(let i = 0; i < whitelistedAccounts.length ; ++i) {
-    //       let wallet = whitelistedAccounts[i];
-    //       let [PDA, _] = await anchor.web3.PublicKey.findProgramAddress(
-    //         [whitelist.publicKey.toBuffer(), wallet.publicKey.toBuffer()],
-    //         WhitelistProgram.programId
-    //       );
-    //     try{
-    //         CounterProgram.methods
-    //         .update()
-    //         .accounts({
-    //                     walletAddress: wallet.publicKey,
-    //                     authority: authority.publicKey,
-    //                     counter: counterPDA,
-    //                     pdaId: PDA,
-    //                     whitelisting: whitelist.publicKey,
-    //                     updateId: WhitelistProgram.programId,
-    //                     systemProgram: anchor.web3.SystemProgram.programId,
-    //                     })
-    //                     .signers([wallet])
-    //                     .rpc();
-    //         }catch(_){
-    //                 console.log(" ✘ Panic! you are not in the whitelist");
-    //         }
-    //     console.log("Updating counter with the address",wallet.publicKey.toString())//, " | total count:", counter.count.toNumber());
-    //   }
-    //   await new Promise(f => setTimeout(f, cleon_theory_time *1000));
-    //   let counter = await CounterProgram.account.counter.fetch(counterPDA);
-    //   console.log("The current count is:", counter.count.toNumber());
-    // });
-      // it("Deletes 50% of whitelisted accounts from the whitelist 📝✘", async() =>{
+    
+      it("Deletes 50% of whitelisted accounts from the whitelist 📝✘", async() =>{
         
-      //   let initBalance = await CounterProgram.provider.connection.getBalance(authority.publicKey);
-      //   for(let i = 0; i < whitelistedAccounts.length/2 ; ++i) {
-      //       let wallet = whitelistedAccounts[i];
-      //       let [PDA, _] = await anchor.web3.PublicKey.findProgramAddress(
-      //         [whitelist.publicKey.toBuffer(), wallet.publicKey.toBuffer()],
-      //         WhitelistProgram.programId
-      //       );
+        let initBalance = await CounterProgram.provider.connection.getBalance(authority.publicKey);
+        for(let i = 0; i < whitelistedAccounts.length/2 ; ++i) {
+            let wallet = whitelistedAccounts[i];
+            let [PDA, _] = await anchor.web3.PublicKey.findProgramAddress(
+              [whitelist.publicKey.toBuffer(), wallet.publicKey.toBuffer()],
+              WhitelistProgram.programId
+            );
         
             
-      //           CounterProgram.methods
-      //           .manipulateAddress(wallet.publicKey, true)
-      //           .accounts({
-      //           authority: authority.publicKey,
-      //           counter: counterPDA,
-      //           pdaId: PDA,
-      //           whitelisting: whitelist.publicKey,
-      //           updateId: WhitelistProgram.programId,
-      //           systemProgram: anchor.web3.SystemProgram.programId,
-      //           })
-      //           .signers([authority])
-      //           .rpc();
-      //           let counter = await CounterProgram.account.counter.fetch(counterPDA);
-      //           console.log("The account:", wallet.publicKey.toString(), "has been deleted from the whitelist")//," | total count:",counter.count.toNumber());
+                await CounterProgram.methods
+                .manipulateAddress(wallet.publicKey, true)
+                .accounts({
+                authority: authority.publicKey,
+                counter: counterPDA,
+                pdaId: PDA,
+                whitelisting: whitelist.publicKey,
+                updateId: WhitelistProgram.programId,
+                systemProgram: anchor.web3.SystemProgram.programId,
+                })
+                .signers([authority])
+                .rpc();
+                let counter = await CounterProgram.account.counter.fetch(counterPDA);
+                console.log("The account:", wallet.publicKey.toString(), "has been deleted from the whitelist")//," | total count:",counter.count.toNumber());
             
-      //   }
-      //   await new Promise(f => setTimeout(f, cleon_theory_time * 1000));
-      //   let counter = await CounterProgram.account.counter.fetch(counterPDA);
-      //   let endBalance = await CounterProgram.provider.connection.getBalance(authority.publicKey);
-      //   expect(endBalance).to.be.greaterThan(initBalance);
-      //   console.log("The current count is ", counter.count.toNumber())
-      //   console.log("The end balance of authority is:",`${endBalance / LAMPORTS_PER_SOL} SOL`, "vs authority init balance:",`${initBalance / LAMPORTS_PER_SOL} SOL`);
+        }
         
-      // })
+        let counter = await CounterProgram.account.counter.fetch(counterPDA);
+        let endBalance = await CounterProgram.provider.connection.getBalance(authority.publicKey);
+        expect(endBalance).to.be.greaterThan(initBalance);
+        console.log("The current count is ", counter.count.toNumber())
+        console.log("The end balance of authority is:",`${endBalance / LAMPORTS_PER_SOL} SOL`, "vs authority init balance:",`${initBalance / LAMPORTS_PER_SOL} SOL`);
+        
+      })
       
     it("Check if deleted wallet actually is in whitelist🤨📝✘", async () => {
       let account1 = whitelistedAccounts[1];
