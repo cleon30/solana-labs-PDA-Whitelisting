@@ -68,5 +68,7 @@ To run the Counter testing
 ```bash
 anchor run counter
 ```
+<img width="748" alt="image" src="https://user-images.githubusercontent.com/62452212/183997942-6e23312b-b64e-4220-ac82-d9db65c732e9.png">
+
 
 0xCleon
