@@ -345,12 +345,15 @@ const App = () => {
             <div>
               <button className = "cta-button sign-button"  onClick={async () => {
                 addingAddress();
-              }}>Add all addresses</button>
+              }}>Add addresses</button>
               <button className = "cta-button sign-button"  onClick={async () => {
                 RemoveAddress();
               }}>Remove addresses</button>
-              <h1 className="h1-gradient font-size-1em"> Current Count is {current_count ? current_count.count.toNumber() : 0}</h1>
-              <h1 className="h1-gradient font-size-1em"> Counter Program is {current_count ? current_count.program.toString().slice(0,4) : ''}..{current_count ? current_count.program.toString().slice(-4):''}</h1>
+              <h1 className="h1-gradient font-size-1em"> 
+              Current Count: {current_count ? current_count.count.toNumber() : 0}  |
+               Program: {current_count ? current_count.program.toString().slice(0,4) : ''}..{current_count ? current_count.program.toString().slice(-4):''}
+            </h1>
+              
             </div>
           <input
             type="file"
@@ -387,9 +390,10 @@ const App = () => {
       <div className="div-container relative">
       <div className ="blockwrap-sdk overflow hidden">
         <div className= "content-center">
-          <div className = "wraper-padding-bug">
-            <div className = "max-width-60ch margin-center">
+        <div className = "wraper-padding-bug">
+        <div className = "max-width-60ch margin-center">
               <div className = "logo-wrapper-bug-bounty">
+               
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Mlh-logo-color.svg/1024px-Mlh-logo-color.svg.png?20200614125343" loading="lazy" alt="" class="immunef-logo drift-logo">
                 </img>
                   {walletAddress ? !renderConnectedContainer() :
