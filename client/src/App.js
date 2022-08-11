@@ -4,8 +4,6 @@ import idl1 from './counter.json';
 import * as anchor from "@project-serum/anchor";
 import { Connection, PublicKey, clusterApiUrl, Keypair } from '@solana/web3.js';
 import { AnchorProvider, Program, Provider, web3, utils } from '@project-serum/anchor';
-// import { Counter } from "./counter";
-// import { Whitelist } from "./whitelist";
 import idl2 from './whitelist.json';
 import Papa from 'papaparse';
 
@@ -221,24 +219,17 @@ const App = () => {
     return () => window.removeEventListener('load', onLoad);
   }, []);
 
-  // const AddAddress = () => (
-  //   <form>
+  // const RemoveAddress = () => (
   //   <div>
-  //     hello
-  //   </div>
-  // </form>
-    
+  //           <button
+  //             className="cta-button sign-button"
+  //             onClick={InitButton}
+  //           >
+  //          Remove Address
+  //         </button>
+  //  </div>
   // );
-  const RemoveAddress = () => (
-    <div>
-            <button
-              className="cta-button sign-button"
-              onClick={InitButton}
-            >
-           Remove Address
-          </button>
-   </div>
-  );
+
   const InitWhitelist = () => (
     <div>
             <button
