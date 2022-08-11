@@ -24,10 +24,10 @@ async function airdrop(connection, destinationWallet, amount) {
 
 
 const App = () => {
+  
   const [recipients, setRecipients] = useState([]);
-  const [theCounterPDA, setTheCounterPDA] = useState(null);
   const [walletAddress, setWalletAddress] = useState(null);
-
+  const [current_count, setCounter] = useState(null);
   const [tableRows, setTableRows] = useState([]);
   const [values, setValues] = useState([]);
   const network = clusterApiUrl('devnet');
@@ -129,6 +129,7 @@ const App = () => {
             .signers([])
             .rpc();
             let counter = await program.account.counter.fetch(counterPDA);
+            setCounter(counter);
             console.log("Your counter PublicKey: ",counterPDA.toString());
             console.log("Your counter number is: ",counter.count.toNumber());
            
@@ -148,8 +149,9 @@ const App = () => {
                 })
                 .signers([whitelist])
                 .rpc();
+                let counter = await program.account.counter.fetch(counterPDA);
+                setCounter(counter);
                 console.log("HELLO", counterPDA.toString());
-                setTheCounterPDA(counterPDA);
 
       }catch(e){
         console.log(e);
@@ -197,6 +199,8 @@ const App = () => {
           })
           .signers([])
           .rpc();
+          let counter = await program.account.counter.fetch(counterPDA);
+          setCounter(counter);
           console.log("Adding Address", wallet2.toString(),"to the whitelist");
           }
         catch(e){
@@ -247,6 +251,8 @@ const App = () => {
           })
           .signers([])
           .rpc();
+          let counter = await program.account.counter.fetch(counterPDA);
+          setCounter(counter);
           console.log("Adding Address", wallet2.toString(),"to the whitelist");
           }
         catch(e){
@@ -313,6 +319,7 @@ const App = () => {
               <button className = "cta-button sign-button"  onClick={async () => {
                 RemoveAddress();
               }}>Remove addresses</button>
+              <h1 className="h1-gradient font-size-1em"> Current Count is {current_count ? current_count.count.toNumber() : 0}</h1>
             </div>
           <input
             type="file"
