@@ -97,6 +97,20 @@
 
 
 }
+.sign-buttonround {
+  /* background: -webkit-linear-gradient(left, #FF387E, #711EFF,#3FE5FF); */
+  background-image: url("https://assets.website-files.com/611580035ad59b20437eb024/616f998c4fdccc1e0de4e5a1_btn%20background%20(1).png");
+  background-size: 100% 100%;
+  animation: animate 4s ease-in-out infinite;
+  position:relative;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  margin-left:0.5em;
+  border-radius: 50%;
+
+
+
+}
 .discord-button {
   /* background: -webkit-linear-gradient(left, #FF387E, #711EFF,#3FE5FF); */
   background-image: url("https://discord.com/assets/cb48d2a8d4991281d7a6a95d2f58195e.svg");
@@ -120,44 +134,21 @@
 
 }
 .cta-button2 {
-  height: 100px;
-  /* border: 0; */
-  width: 200px;
-  padding-left: 40px;
-  padding-right: 40px;
-  border-radius: 10px;
+  /* height: 50px; */
   cursor: pointer;
+  padding: 20px;
+  /* border: 0; */
+  /* width: 100px; */
+  display: inline-block;
+  text-align: center;
   font-size: 20px;
   font-weight: bold;
   color: black;
-  position: relative
-}
+  position: absolute;
+  border-radius: 50%;
 
-.authed-container {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  width: 10em;
-  height: 2.5em;
-  padding: 0;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
-  border-radius: 0.56em;
-  background-size: cover;
-  -webkit-transition: 1s;
-  transition: 1s;
-  font-family: Denim,sans-serif;
-  color: #0e0d0d;
-  font-weight: 500;
-  text-decoration: none;
+  margin-left:280px;
+  margin-top: -200px;
 
 }
 
@@ -342,6 +333,7 @@ p {
   padding-top: 1em;
   padding-bottom: 1em;
   background-color: #080F18;
+  /* background-color: #080F18; */
 }
 .margin-center {
   margin-right: auto;

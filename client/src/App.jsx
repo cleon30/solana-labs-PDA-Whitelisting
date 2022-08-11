@@ -99,6 +99,16 @@ const App = () => {
       setWalletAddress(response);
     }
   };
+  const fetchData = async() =>{
+    const provider = getProvider();
+    const program = new Program(idl1, CounterProgram, provider);
+    let [counterPDA,]= await anchor.web3.PublicKey.findProgramAddress(
+      [Buffer.from(anchor.utils.bytes.utf8.encode("counter")), walletAddress.publicKey.toBuffer()],
+      program.programId
+      );
+    let counter = await program.account.counter.fetch(counterPDA);
+          setCounter(counter);
+  }
   const InitializeCounter = async() =>{
     
   const provider = getProvider();
@@ -283,6 +293,15 @@ const App = () => {
     console.log(e);
     }
   };
+  const fetchButton = async () => {
+    try{
+      if (!walletAddress) throw new Error('Wallet not connected!');
+      await fetchData();
+
+    }catch(e){
+    console.log(e);
+    }
+  };
 
   useEffect(() => {
     const onLoad = async () => {
@@ -304,6 +323,16 @@ const App = () => {
           </button>
    </div>
   );
+  const InitFetchButton = () => (
+    <div>
+            <button
+              className="cta-button2 sign-buttonround"
+              onClick={fetchButton}
+            >
+          Fetch
+          </button>
+   </div>
+  );
   
   const renderConnectedContainer = () =>{
     return(
@@ -312,6 +341,7 @@ const App = () => {
           <div>
             <h1 className="h1-gradient font-size-3em"> Welcome to Whitelist Contract Dashboard</h1>
             {InitWhitelist()}
+            {InitFetchButton()}
             <div>
               <button className = "cta-button sign-button"  onClick={async () => {
                 addingAddress();
@@ -320,6 +350,7 @@ const App = () => {
                 RemoveAddress();
               }}>Remove addresses</button>
               <h1 className="h1-gradient font-size-1em"> Current Count is {current_count ? current_count.count.toNumber() : 0}</h1>
+              <h1 className="h1-gradient font-size-1em"> Counter Program is {current_count ? current_count.program.toString().slice(0,4) : ''}..{current_count ? current_count.program.toString().slice(-4):''}</h1>
             </div>
           <input
             type="file"
