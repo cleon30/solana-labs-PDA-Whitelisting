@@ -27,11 +27,15 @@ const App = () => {
   const [recipients, setRecipients] = useState([]);
   const [theCounterPDA, setTheCounterPDA] = useState(null);
   const [walletAddress, setWalletAddress] = useState(null);
-  const  whitelist = anchor.web3.Keypair.generate();
+  let  whitelist = anchor.web3.Keypair.generate();
+  const [sameProgram, setSameProgram] = useState(null);
+  const [sameProgram2, setSameProgram2] = useState(null);
+  const [sameWhitelist, setSameWhitelist] = useState(null);
   const [tableRows, setTableRows] = useState([]);
   const [values, setValues] = useState([]);
   const network = clusterApiUrl('devnet');
   // const network = "http://127.0.0.1:8899";
+  
   const opts = {
     preflightCommitment: "processed"
   }
@@ -87,33 +91,38 @@ const App = () => {
   };
   const CounterProgram = new PublicKey(idl1.metadata.address);
   const WhitelistProgram = new PublicKey(idl2.metadata.address);
+
   const connectWallet = async () => {
     const { solana } = window;
-
     if (solana) {
       const response = await solana.connect();
       console.log('Connected with Public Key:', response.publicKey.toString());
-     
+      
     }
   };
   const InitializeCounter = async() =>{
   const provider = getProvider();
+
   const program = new Program(idl1, CounterProgram, provider);
   const program2 = new Program(idl2, WhitelistProgram, provider);
-  // const authority =new PublicKey(walletAddress);
-    
-    await airdrop(provider.connection, walletAddress,2);
-    let initial = await program.provider.connection.getBalance(walletAddress.publicKey);
+    // await airdrop(provider.connection, walletAddress,2);
+    setSameProgram(program);
+    setSameProgram2(program2);
+    // await new Promise(f => setTimeout(f, 1000));
+    await airdrop(provider.connection, whitelist,1);
+    let initial = await program.provider.connection.getBalance(whitelist.publicKey);
     console.log(initial);
+    console.log(whitelist.publicKey.toString());
+    // let initial = await program.provider.connection.getBalance(whitelist.publicKey);
     // console.log(initial);
-
+    // setSameWhitelist(whitelist);
     let [counterPDA, counterBump]= await anchor.web3.PublicKey.findProgramAddress(
       [Buffer.from(anchor.utils.bytes.utf8.encode("counter")), walletAddress.publicKey.toBuffer()],
       program.programId
       );
       
-
     console.log(counterBump);
+    
       try{
             await program.methods
             .initCounter(counterBump)
@@ -127,22 +136,27 @@ const App = () => {
             let counter = await program.account.counter.fetch(counterPDA);
             console.log("Your counter PublicKey: ",counterPDA.toString());
             console.log("Your counter number is: ",counter.count.toNumber());
-       
-        await program.methods
-            .pointToWhitelist()
-            .accounts({
-              authority:walletAddress.publicKey,
-              counter: counterPDA,
-              whitelisting: whitelist.publicKey,
-              pointerToWhitelistId: program2.programId,
-              systemProgram: anchor.web3.SystemProgram.programId,
-            })
-            .signers([whitelist])
-            .rpc();
-            console.log("HELLO", counterPDA.toString());
-            setTheCounterPDA(counterPDA);
+           
+            
+      }catch(e){
+            console.log(e);
+      }try{
+            
+            await program.methods
+                .pointToWhitelist()
+                .accounts({
+                  authority:walletAddress.publicKey,
+                  counter: counterPDA,
+                  whitelisting: whitelist.publicKey,
+                  pointerToWhitelistId: program2.programId,
+                  systemProgram: anchor.web3.SystemProgram.programId,
+                })
+                .signers([whitelist])
+                .rpc();
+                console.log("HELLO", counterPDA.toString());
+                setTheCounterPDA(counterPDA);
 
-          }catch(e){
+      }catch(e){
         console.log(e);
       }
    
@@ -158,8 +172,13 @@ const App = () => {
       [Buffer.from(anchor.utils.bytes.utf8.encode("counter")), walletAddress.publicKey.toBuffer()],
       program.programId
       );
-  
+      let counter = await program.account.counter.fetch(counterPDA);
+      console.log("Your counter PublicKey: ",counterPDA.toString());
+      console.log("Your counter number is: ",counter.count.toNumber());
       console.log("whitelist is :", whitelist.publicKey.toString());
+      console.log(whitelist.publicKey.toString());
+      let money = await program.provider.connection.getBalance(whitelist.publicKey);
+      console.log("money is:", money);
     // console.log(theCounterPDA.toString());
     
       for (var i = 0; i < recipients_length; i++) {
