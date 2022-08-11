@@ -38,7 +38,6 @@ const App = () => {
   const secret = new Uint8Array(arr);
   const whitelist = web3.Keypair.fromSecretKey(secret)
   // const network = "http://127.0.0.1:8899";
-  
   const opts = {
     preflightCommitment: "processed"
   }
@@ -211,7 +210,10 @@ const App = () => {
         catch(e){
           console.log(e);
         };
+
       };
+      let counter2 = await program.account.counter.fetch(counterPDA);
+      console.log("the counter count is:",counter2.count.toNumber());
   };
   
   const renderNotConnectedContainer = () => (
