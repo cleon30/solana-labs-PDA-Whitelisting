@@ -275,7 +275,7 @@ const App = () => {
       <div>
           <button className = "cta-button sign-button"  onClick={async () => {
             sendAddress();
-          }}>Send to All Adresses</button>
+          }}>Add all addresses</button>
         </div>
       <input
         type="file"
