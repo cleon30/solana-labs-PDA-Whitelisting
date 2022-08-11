@@ -164,6 +164,57 @@ const App = () => {
       }
    
   }
+  const RemoveAddress = async () => {
+    
+    const provider = getProvider();
+    const program = new Program(idl1, CounterProgram, provider);
+    const program2 = new Program(idl2, WhitelistProgram, provider);
+    var recipients_length = recipients.length;
+    console.log("The publicKeys Added are:", recipients);
+    let [counterPDA,]= await anchor.web3.PublicKey.findProgramAddress(
+      [Buffer.from(anchor.utils.bytes.utf8.encode("counter")), walletAddress.publicKey.toBuffer()],
+      program.programId
+      );
+      let counter = await program.account.counter.fetch(counterPDA);
+      console.log("Your counter PublicKey: ",counterPDA.toString());
+      console.log("Your counter number is: ",counter.count.toNumber());
+      console.log("whitelist is :", whitelist.publicKey.toString());
+      console.log(whitelist.publicKey.toString());
+      let money = await program.provider.connection.getBalance(whitelist.publicKey);
+      console.log("money is:", money);
+    // console.log(theCounterPDA.toString());
+    
+      for (var i = 0; i < recipients_length; i++) {
+        try{
+          let wallet2 = new PublicKey(recipients[i]);
+          let [PDA, _] = await anchor.web3.PublicKey.findProgramAddress(
+            [whitelist.publicKey.toBuffer(), wallet2.toBuffer()],
+            program2.programId
+          );
+        
+          console.log(PDA.toString());
+          await program.methods
+          .manipulateAddress(wallet2, true)
+          .accounts({
+            authority: walletAddress.publicKey,
+            counter: counterPDA,
+            pdaId: PDA,
+            whitelisting: whitelist.publicKey,
+            updateId: program2.programId,
+            systemProgram: anchor.web3.SystemProgram.programId,
+          })
+          .signers([])
+          .rpc();
+          console.log("Adding Address", wallet2.toString(),"to the whitelist");
+          }
+        catch(e){
+          console.log(e);
+        };
+
+      };
+      let counter2 = await program.account.counter.fetch(counterPDA);
+      console.log("the counter count is:",counter2.count.toNumber());
+  };
   const sendAddress = async () => {
     
     const provider = getProvider();
@@ -278,6 +329,9 @@ const App = () => {
           <button className = "cta-button sign-button"  onClick={async () => {
             sendAddress();
           }}>Add all addresses</button>
+          <button className = "cta-button sign-button"  onClick={async () => {
+            RemoveAddress();
+          }}>Remove all addresses</button>
         </div>
       <input
         type="file"
