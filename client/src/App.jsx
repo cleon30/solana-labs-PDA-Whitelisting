@@ -362,14 +362,9 @@ const App = () => {
           />
             <table className= "styled-table">
               <thead className = "styled-table thead tr">
-                <tr>
-                  {tableRows.map((rows, index) => {
-                    return <th className ="minus-text" key={index}>
-                            {rows}
-                            </th>;
-                  })
-                  }
-                </tr>
+               <tr className="minus-text">
+                 Addresses
+               </tr>
               </thead>
               <tbody>
                 {values.map((value, index) => {

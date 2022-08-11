@@ -40,8 +40,15 @@
   margin-top: 0.5em;
   margin-bottom: 1em;
 }
+.styled-table{
+  margin-top: 2em;
+  position: relative;
+  position: center;
+  margin-left: 3em;
+}
 .styled-table thead tr {
-  
+  margin-top: 0.5em;
+  position: relative;
   color: #ffffff;
   text-align: center;
  
@@ -77,6 +84,7 @@
 }
 .styled-table tbody tr {
   border-bottom: 1px solid #009879;
+  text-align: center;
 
 }
 
@@ -84,6 +92,7 @@
 
 .styled-table tbody tr:last-of-type {
   border-bottom: 2px solid #009879;
+
 }
 .sign-button {
   /* background: -webkit-linear-gradient(left, #FF387E, #711EFF,#3FE5FF); */
