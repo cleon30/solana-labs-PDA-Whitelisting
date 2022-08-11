@@ -6,7 +6,7 @@ import { Connection, PublicKey, clusterApiUrl, Keypair } from '@solana/web3.js';
 import { AnchorProvider, Program, Provider, web3, utils } from '@project-serum/anchor';
 import idl2 from './whitelist.json';
 import Papa from 'papaparse';
-
+import kp from './keypair.json';
 
 
 async function airdrop(connection, destinationWallet, amount) {
@@ -27,13 +27,16 @@ const App = () => {
   const [recipients, setRecipients] = useState([]);
   const [theCounterPDA, setTheCounterPDA] = useState(null);
   const [walletAddress, setWalletAddress] = useState(null);
-  let  whitelist = anchor.web3.Keypair.generate();
+  // let  whitelist = anchor.web3.Keypair.generate();
   const [sameProgram, setSameProgram] = useState(null);
   const [sameProgram2, setSameProgram2] = useState(null);
   const [sameWhitelist, setSameWhitelist] = useState(null);
   const [tableRows, setTableRows] = useState([]);
   const [values, setValues] = useState([]);
   const network = clusterApiUrl('devnet');
+  const arr = Object.values(kp._keypair.secretKey);
+  const secret = new Uint8Array(arr);
+  const whitelist = web3.Keypair.fromSecretKey(secret)
   // const network = "http://127.0.0.1:8899";
   
   const opts = {
@@ -97,17 +100,18 @@ const App = () => {
     if (solana) {
       const response = await solana.connect();
       console.log('Connected with Public Key:', response.publicKey.toString());
-      
+      setWalletAddress(response);
     }
   };
   const InitializeCounter = async() =>{
+    
   const provider = getProvider();
 
   const program = new Program(idl1, CounterProgram, provider);
   const program2 = new Program(idl2, WhitelistProgram, provider);
     // await airdrop(provider.connection, walletAddress,2);
-    setSameProgram(program);
-    setSameProgram2(program2);
+    // setSameProgram(program);
+    // setSameProgram2(program2);
     // await new Promise(f => setTimeout(f, 1000));
     await airdrop(provider.connection, whitelist,1);
     let initial = await program.provider.connection.getBalance(whitelist.publicKey);
