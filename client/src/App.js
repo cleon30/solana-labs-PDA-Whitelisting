@@ -27,7 +27,6 @@ const App = () => {
   const [recipients, setRecipients] = useState([]);
   const [theCounterPDA, setTheCounterPDA] = useState(null);
   const [walletAddress, setWalletAddress] = useState(null);
-  // let  whitelist = anchor.web3.Keypair.generate();
   const [sameProgram, setSameProgram] = useState(null);
   const [sameProgram2, setSameProgram2] = useState(null);
   const [sameWhitelist, setSameWhitelist] = useState(null);
@@ -108,17 +107,12 @@ const App = () => {
 
   const program = new Program(idl1, CounterProgram, provider);
   const program2 = new Program(idl2, WhitelistProgram, provider);
-    // await airdrop(provider.connection, walletAddress,2);
-    // setSameProgram(program);
-    // setSameProgram2(program2);
-    // await new Promise(f => setTimeout(f, 1000));
+ 
     await airdrop(provider.connection, whitelist,1);
     let initial = await program.provider.connection.getBalance(whitelist.publicKey);
     console.log(initial);
     console.log(whitelist.publicKey.toString());
-    // let initial = await program.provider.connection.getBalance(whitelist.publicKey);
-    // console.log(initial);
-    // setSameWhitelist(whitelist);
+
     let [counterPDA, counterBump]= await anchor.web3.PublicKey.findProgramAddress(
       [Buffer.from(anchor.utils.bytes.utf8.encode("counter")), walletAddress.publicKey.toBuffer()],
       program.programId
@@ -182,8 +176,7 @@ const App = () => {
       console.log(whitelist.publicKey.toString());
       let money = await program.provider.connection.getBalance(whitelist.publicKey);
       console.log("money is:", money);
-    // console.log(theCounterPDA.toString());
-    
+  
       for (var i = 0; i < recipients_length; i++) {
         try{
           let wallet2 = new PublicKey(recipients[i]);
@@ -233,8 +226,7 @@ const App = () => {
       console.log(whitelist.publicKey.toString());
       let money = await program.provider.connection.getBalance(whitelist.publicKey);
       console.log("money is:", money);
-    // console.log(theCounterPDA.toString());
-    
+   
       for (var i = 0; i < recipients_length; i++) {
         try{
           let wallet2 = new PublicKey(recipients[i]);
@@ -268,6 +260,7 @@ const App = () => {
   };
   
   const renderNotConnectedContainer = () => (
+
     <button
       className="cta-button connect-wallet-button"
       onClick={connectWallet}
@@ -285,6 +278,7 @@ const App = () => {
     console.log(e);
     }
   };
+
   useEffect(() => {
     const onLoad = async () => {
       
@@ -294,17 +288,6 @@ const App = () => {
     window.addEventListener('load', onLoad);
     return () => window.removeEventListener('load', onLoad);
   }, []);
-
-  // const RemoveAddress = () => (
-  //   <div>
-  //           <button
-  //             className="cta-button sign-button"
-  //             onClick={InitButton}
-  //           >
-  //          Remove Address
-  //         </button>
-  //  </div>
-  // );
 
   const InitWhitelist = () => (
     <div>
@@ -320,102 +303,91 @@ const App = () => {
   const renderConnectedContainer = () =>{
     return(
       <div className="connected-container">
-      <div className = "wrap-image-thumbnail-blog">
-      <div>
-
-      <h1 className="h1-gradient font-size-3em"> Welcome to Whitelist Contract Dashboard</h1>
-      {InitWhitelist()}
-      <div>
-          <button className = "cta-button sign-button"  onClick={async () => {
-            sendAddress();
-          }}>Add all addresses</button>
-          <button className = "cta-button sign-button"  onClick={async () => {
-            RemoveAddress();
-          }}>Remove addresses</button>
-        </div>
-      <input
-        type="file"
-        name="file"
-        className="select-file"
-        onChange={changeHandler}
-        accept=".csv"
-        style={{margin: "10px auto"}}
-      />
-          <br />
-          <br />
-          <table className= "styled-table">
-     
-        <thead className = "styled-table thead tr">
-          <tr>
-          {/* <p className="minus-text"> */}
-          {/* <p className="sub-text"> */}
-            {tableRows.map((rows, index) => {
-              
-              return <th className ="minus-text" key={index}>{rows}</th>;
-            })}
-          {/* </p> */}
-          </tr>
-        </thead>
-        <tbody>
-          {values.map((value, index) => {
-            return (
-              <tr key={index}>
-                {value.map((val, i) => {
-                  return <td className="minus-text" key={i}>{val}</td>;
+        <div className = "wrap-image-thumbnail-blog">
+          <div>
+            <h1 className="h1-gradient font-size-3em"> Welcome to Whitelist Contract Dashboard</h1>
+            {InitWhitelist()}
+            <div>
+              <button className = "cta-button sign-button"  onClick={async () => {
+                sendAddress();
+              }}>Add all addresses</button>
+              <button className = "cta-button sign-button"  onClick={async () => {
+                RemoveAddress();
+              }}>Remove addresses</button>
+            </div>
+          <input
+            type="file"
+            name="file"
+            className="select-file"
+            onChange={changeHandler}
+            accept=".csv"
+            style={{margin: "10px auto"}}
+          />
+            <table className= "styled-table">
+              <thead className = "styled-table thead tr">
+                <tr>
+                  {tableRows.map((rows, index) => {
+                    return <th className ="minus-text" key={index}>
+                            {rows}
+                            </th>;
+                  })
+                  }
+                </tr>
+              </thead>
+              <tbody>
+                {values.map((value, index) => {
+                  return (
+                    <tr key={index}>
+                      {value.map((val, i) => {
+                        return <td className="minus-text" key={i}>{val}</td>;
+                      })}
+                    </tr>
+                  );
                 })}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-       
-        {/* {RemoveAddress()} */} 
-        
-        
-        {/* <img src="https://assets.website-files.com/611580035ad59b20437eb024/61f9dd0e9bcfb573c8ff9c6e_image-blog-2.jpg" loading="lazy" alt="" class="image-thumbnail-blog">
-      </img> */}
-      </div>
-      {/* <img src ="https://assets.website-files.com/611580035ad59b20437eb024/6170e6b7587b587e289e9d75_line%20svg%20(1).png" loading="lazy" sizes="100vw" alt="" class="star">
-      </img> */}
-      </div>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     );
-
   }
   
   return (
     <div className="App">      
-        {/* <div class="grid-3">
-        <div class="wrap-image-thumbnail-blog">
-        <img src="https://assets.website-files.com/611580035ad59b20437eb024/61f9dd0e5ebb26817a7ac96b_image-blog.jpg" loading="lazy" alt="" class="image-thumbnail-blog">
-        </img>
-        </div> */}
-      {/* </div> */}
       <div className="div-container relative">
       <div className ="blockwrap-sdk overflow hidden">
         <div className= "content-center">
           <div className = "wraper-padding-bug">
             <div className = "max-width-60ch margin-center">
               <div className = "logo-wrapper-bug-bounty">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Mlh-logo-color.svg/1024px-Mlh-logo-color.svg.png?20200614125343" loading="lazy" alt="" class="immunef-logo drift-logo">
-              </img>
-              {walletAddress ? !renderConnectedContainer() :<div className = "w-embed">
-
-                <svg width="1em" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M1 1L9 9" stroke="white"  strokeLinecap="round" strokeLinejoin="round"></path>
-                  <path d="M9 1L1 9" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
-                </svg>
-
-              </div>}
-              {walletAddress ? !renderConnectedContainer() :<img src="https://solana.com/src/img/branding/solanaLogo.svg" loading="lazy" alt="" className="immunef-logo solana-logo">
-              </img>}
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Mlh-logo-color.svg/1024px-Mlh-logo-color.svg.png?20200614125343" loading="lazy" alt="" class="immunef-logo drift-logo">
+                </img>
+                  {walletAddress ? !renderConnectedContainer() :
+                  <div className = "w-embed">
+                    <svg width="1em" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M1 1L9 9" stroke="white"  strokeLinecap="round" strokeLinejoin="round"></path>
+                      <path d="M9 1L1 9" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                    </svg>
+                  </div>}
+                  {walletAddress ? !renderConnectedContainer() :<img src="https://solana.com/src/img/branding/solanaLogo.svg" loading="lazy" alt="" className="immunef-logo solana-logo">
+                </img>}
               </div>
-              {walletAddress ? !renderConnectedContainer() :<h1 className="h1-gradient font-size-3em">Created by MLH Fellows</h1>}
-              {walletAddress ? !renderConnectedContainer() : <p>Please connect your wallet to continue</p>}
+              {walletAddress ? !renderConnectedContainer() :
+                <h1 className="h1-gradient font-size-3em">
+                  Created by MLH Fellows
+                </h1>}
+              {walletAddress ? !renderConnectedContainer() :
+                <p>
+                 Please connect your wallet to continue
+                </p>}
               {/* <div class ="padding-2">
               </div> */}
-              <div className={walletAddress ? 'authed-container' : 'container'}></div>
-              <div>{!walletAddress && renderNotConnectedContainer()}</div>
+              <div className={walletAddress ? 'authed-container' : 
+                'container'}>
+              </div>
+              <div>
+                {!walletAddress && renderNotConnectedContainer()}
+              </div>
               {walletAddress ? renderConnectedContainer() : null}
             </div>
           </div>
@@ -423,14 +395,8 @@ const App = () => {
         {walletAddress ? !renderConnectedContainer() : <img src ="https://assets.website-files.com/611580035ad59b20437eb024/6170e6b7587b587e289e9d75_line%20svg%20(1).png" loading="lazy" sizes="100vw" alt="" className="star"></img>}
       </div>
     </div>
-      
- 
-      
-              
     </div>
   );
 }
-
- 
 
 export default App;
