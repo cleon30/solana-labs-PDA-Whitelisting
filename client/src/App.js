@@ -4,8 +4,8 @@ import idl1 from './counter.json';
 import * as anchor from "@project-serum/anchor";
 import { Connection, PublicKey, clusterApiUrl, Keypair } from '@solana/web3.js';
 import { AnchorProvider, Program, Provider, web3, utils } from '@project-serum/anchor';
-import { Counter } from "./counter";
-import { Whitelist } from "./whitelist";
+// import { Counter } from "./counter";
+// import { Whitelist } from "./whitelist";
 import idl2 from './whitelist.json';
 import Papa from 'papaparse';
 
@@ -87,50 +87,16 @@ const App = () => {
     });
 
   };
-  const sendAddress = async () => {
-    
-    const provider = getProvider();
-    const program = new Program(idl1, CounterProgram, provider);
-    const program2 = new Program(idl2, WhitelistProgram, provider);
-    var recipients_length = recipients.length;
-    console.log("The publicKeys Added are:", recipients);
-    let [counterPDA,]= await anchor.web3.PublicKey.findProgramAddress(
-      [Buffer.from(anchor.utils.bytes.utf8.encode("counter")), walletAddress.publicKey.toBuffer()],
-      program.programId
-      );
-      setTheCounterPDA(counterPDA);
-      // setProgram(program);
-      // setProgram(program);
-      console.log("whitelist is :", whitelist.publicKey.toString());
-    // console.log(theCounterPDA.toString());
-    
-      for (var i = 0; i < recipients_length; i++) {
-        try{
-          let wallet2 = new PublicKey(recipients[i]);
-          let [PDA, _] = await anchor.web3.PublicKey.findProgramAddress(
-            [whitelist.publicKey.toBuffer(), wallet2.toBuffer()],
-            program2.programId
-          );
-        
-          // console.log(PDA.toString());
-          await program.methods
-          .manipulateAddress(wallet2, false)
-          .accounts({
-            authority: walletAddress.publicKey,
-            counter: counterPDA,
-            pdaId: PDA,
-            whitelisting: whitelist.publicKey,
-            updateId: program2.programId,
-            systemProgram: anchor.web3.SystemProgram.programId,
-          })
-          .signers([])
-          .rpc();
-          console.log("Adding Address", wallet2.toString(),"to the whitelist");
-          }
-        catch(e){
-          console.log(e);
-        };
-      };
+  const CounterProgram = new PublicKey(idl1.metadata.address);
+  const WhitelistProgram = new PublicKey(idl2.metadata.address);
+  const connectWallet = async () => {
+    const { solana } = window;
+
+    if (solana) {
+      const response = await solana.connect();
+      console.log('Connected with Public Key:', response.publicKey.toString());
+     
+    }
   };
   const InitializeCounter = async() =>{
   const provider = getProvider();
@@ -183,17 +149,50 @@ const App = () => {
       }
    
   }
-  const CounterProgram = new PublicKey(idl1.metadata.address);
-  const WhitelistProgram = new PublicKey(idl2.metadata.address);
-  const connectWallet = async () => {
-    const { solana } = window;
-
-    if (solana) {
-      const response = await solana.connect();
-      console.log('Connected with Public Key:', response.publicKey.toString());
-     
-    }
+  const sendAddress = async () => {
+    
+    const provider = getProvider();
+    const program = new Program(idl1, CounterProgram, provider);
+    const program2 = new Program(idl2, WhitelistProgram, provider);
+    var recipients_length = recipients.length;
+    console.log("The publicKeys Added are:", recipients);
+    let [counterPDA,]= await anchor.web3.PublicKey.findProgramAddress(
+      [Buffer.from(anchor.utils.bytes.utf8.encode("counter")), walletAddress.publicKey.toBuffer()],
+      program.programId
+      );
+  
+      console.log("whitelist is :", whitelist.publicKey.toString());
+    // console.log(theCounterPDA.toString());
+    
+      for (var i = 0; i < recipients_length; i++) {
+        try{
+          let wallet2 = new PublicKey(recipients[i]);
+          let [PDA, _] = await anchor.web3.PublicKey.findProgramAddress(
+            [whitelist.publicKey.toBuffer(), wallet2.toBuffer()],
+            program2.programId
+          );
+        
+          console.log(PDA.toString());
+          await program.methods
+          .manipulateAddress(wallet2, false)
+          .accounts({
+            authority: walletAddress.publicKey,
+            counter: counterPDA,
+            pdaId: PDA,
+            whitelisting: whitelist.publicKey,
+            updateId: program2.programId,
+            systemProgram: anchor.web3.SystemProgram.programId,
+          })
+          .signers([])
+          .rpc();
+          console.log("Adding Address", wallet2.toString(),"to the whitelist");
+          }
+        catch(e){
+          console.log(e);
+        };
+      };
   };
+  
   const renderNotConnectedContainer = () => (
     <button
       className="cta-button connect-wallet-button"
