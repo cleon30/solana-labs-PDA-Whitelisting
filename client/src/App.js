@@ -380,11 +380,6 @@ const App = () => {
                 <p>
                  Please connect your wallet to continue
                 </p>}
-              {/* <div class ="padding-2">
-              </div> */}
-              <div className={walletAddress ? 'authed-container' : 
-                'container'}>
-              </div>
               <div>
                 {!walletAddress && renderNotConnectedContainer()}
               </div>
