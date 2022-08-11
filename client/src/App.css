@@ -62,7 +62,6 @@
 }
 
 .select-file {
-  
   background-image: url("https://assets.website-files.com/611580035ad59b20437eb024/616f998c4fdccc1e0de4e5a1_btn%20background%20(1).png");
   background-size: 100% 100%;
   animation: gradient-animation 4s ease infinite;
@@ -80,7 +79,6 @@
 }
 .styled-table th,
 .styled-table td {
-
     padding: 10px 10px;
 }
 .styled-table tbody tr {
@@ -88,12 +86,8 @@
   text-align: center;
 
 }
-
-
-
 .styled-table tbody tr:last-of-type {
   border-bottom: 2px solid #009879;
-
 }
 .sign-button {
   /* background: -webkit-linear-gradient(left, #FF387E, #711EFF,#3FE5FF); */
@@ -104,8 +98,6 @@
   margin-top: 0.5em;
   margin-bottom: 0.5em;
   margin-left:0.5em;
-
-
 }
 .sign-buttonround {
   /* background: -webkit-linear-gradient(left, #FF387E, #711EFF,#3FE5FF); */
@@ -117,18 +109,6 @@
   margin-bottom: 0.5em;
   margin-left:0.5em;
   border-radius: 50%;
-
-
-
-}
-.discord-button {
-  /* background: -webkit-linear-gradient(left, #FF387E, #711EFF,#3FE5FF); */
-  background-image: url("https://discord.com/assets/cb48d2a8d4991281d7a6a95d2f58195e.svg");
-  background-size: 100% 100%;
-  animation: animate 4s ease-in-out infinite;
-  position: relative;
-  margin-top: 0.5em;
-  margin-bottom: 2em;
 }
 .cta-button {
   height: 45px;
@@ -156,12 +136,9 @@
   color: black;
   position: absolute;
   border-radius: 50%;
-
   margin-left:280px;
   margin-top: -220px;
-
 }
-
 body {
    background: #030A13;
 }
@@ -179,11 +156,7 @@ body {
 .wrap-image-thumbnail-blog {
   margin-bottom: 2em;
 }
-.wrap-image-discord {
-  margin-bottom: 2em;
-  margin-right: 1em;
-  left: 3722px;
-}
+
 .grid-3 {
   -ms-grid-columns: 1fr;
   grid-template-columns: 1fr;
@@ -197,17 +170,6 @@ img {
   max-width: 100%;
   vertical-align: middle;
   display: inline-block;
-}
-.grid-3 {
-  display: -ms-grid;
-  display: grid;
-  grid-auto-columns: 1fr;
-  grid-column-gap: 16px;
-  grid-row-gap: 16px;
-  -ms-grid-columns: 1fr 1fr 1fr;
-  grid-template-columns: 1fr 1fr 1fr;
-  -ms-grid-rows: auto;
-  grid-template-rows: auto;
 }
 
 .App-link {
@@ -244,14 +206,7 @@ img {
   /* top: 132px;
   right: 65px; */
 }
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+
 .w-embed:before {
   content: " ";
   display: table;
@@ -279,14 +234,6 @@ img {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-
-.body-black {
-  background-color: #000;
-  font-family: Denim,sans-serif;
-  color: #fff;
-  font-size: 1vw;
-  line-height: 1.3em;
-}
 p {
   margin-top: 1em;
   margin-bottom: 1em;
@@ -312,9 +259,6 @@ p {
 }
 .div-container.relative {
   position: relative;
-  
-  
-
 }
 .div-container {
   width: 95%;
@@ -324,9 +268,6 @@ p {
   padding-right: 20vw;
   padding-left: 20vw;
   position: absolute;
-  
-  
-
 }
 .header-bg {
   position: absolute;
@@ -397,15 +338,6 @@ p {
   margin-right: 0.75em;
   margin-bottom: 2em;
   padding-left: 1.5em;
-}
-.solana-logo2 {
-  width: 5em;
-  height: 4em;
-  margin-right: 0.75em;
-  margin-bottom: 2em;
-  padding-left: 1.5em;
-  position:absolute;
-  top:180px;
 }
 .immunef-logo {
   width: auto;
