@@ -42,6 +42,7 @@ pub mod counter {
 
 
     pub fn add_or_remove(ctx: Context<AddOrRemove>, wallet: Pubkey, remove:bool) -> Result<()> {
+
         let counter = &mut ctx.accounts.counter;
         assert!(counter.initialized ==true);
         let admin = ctx.accounts.authority.key();

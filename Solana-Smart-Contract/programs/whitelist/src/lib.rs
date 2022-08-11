@@ -72,7 +72,6 @@ pub struct RemoveAddress<'info> {
         close = authority,
     )]
     pda_id: Account<'info, Wallet>,
-    
     #[account(mut)]
     authority: Signer<'info>,
     system_program: Program<'info, System>,
