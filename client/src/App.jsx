@@ -362,9 +362,7 @@ const App = () => {
           />
             <table className= "styled-table">
               <thead className = "styled-table thead tr">
-               <tr className="minus-text">
-                 Addresses
-               </tr>
+               
               </thead>
               <tbody>
                 {values.map((value, index) => {
