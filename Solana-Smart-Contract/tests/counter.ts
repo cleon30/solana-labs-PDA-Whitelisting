@@ -67,6 +67,7 @@ async function airdrop(connection, destinationWallet, amount) {
         [Buffer.from(anchor.utils.bytes.utf8.encode("counter")), authority.publicKey.toBuffer()],
         CounterProgram.programId
         );
+        
         await CounterProgram.methods
           .initCounter(counterBump)
           .accounts({
