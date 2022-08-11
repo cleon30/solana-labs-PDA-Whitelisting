@@ -108,7 +108,7 @@ async function airdrop(connection, destinationWallet, amount) {
           );
       // console.log(counterPDA);
           await CounterProgram.methods
-          .manipulateAddress(wallet.publicKey, false)
+          .addOrRemove(wallet.publicKey, false)
           .accounts({
             authority: authority.publicKey,
             counter: counterPDA,
@@ -157,7 +157,7 @@ async function airdrop(connection, destinationWallet, amount) {
         
             
                 await CounterProgram.methods
-                .manipulateAddress(wallet.publicKey, true)
+                .addOrRemove(wallet.publicKey, true)
                 .accounts({
                 authority: authority.publicKey,
                 counter: counterPDA,
@@ -213,7 +213,7 @@ async function airdrop(connection, destinationWallet, amount) {
       );
       try{
           await CounterProgram.methods
-          .manipulateAddress(account1.publicKey, false)
+          .addOrRemove(account1.publicKey, false)
           .accounts({
             authority: authority.publicKey,
             counter: counterPDA,
@@ -243,7 +243,7 @@ async function airdrop(connection, destinationWallet, amount) {
       );
       try{
           await CounterProgram.methods
-          .manipulateAddress(account1.publicKey, true)
+          .addOrRemove(account1.publicKey, true)
           .accounts({
             authority: authority.publicKey,
             counter: counterPDA,
@@ -273,7 +273,7 @@ async function airdrop(connection, destinationWallet, amount) {
           
           try{
               await CounterProgram.methods
-              .manipulateAddress(wallet.publicKey, true)
+              .addOrRemove(wallet.publicKey, true)
               .accounts({
               authority: authority.publicKey,
               counter: counterPDA,

@@ -5,7 +5,7 @@ use whitelist::cpi::accounts::{
 use crate::whitelist::Wallet;
 use whitelist::program::Whitelist;
 use whitelist::{self};
-declare_id!("RwJh1Jgg8SbzibZXtj3Kze2fG5SQhPCAMPVmL6XMiAX");
+declare_id!("6ytgRBXV28kgbmg7z1zsSeBZc1yTt7WU3LHQ8BxuohkJ");
 
 const DISCRIMINATOR_LENGTH: usize = 8;
 const PUBKEY_LENGTH: usize = 32;
@@ -41,7 +41,7 @@ pub mod counter {
     }
 
 
-    pub fn manipulate_address(ctx: Context<AddOrRemove>, wallet: Pubkey, remove:bool) -> Result<()> {
+    pub fn add_or_remove(ctx: Context<AddOrRemove>, wallet: Pubkey, remove:bool) -> Result<()> {
         let counter = &mut ctx.accounts.counter;
         assert!(counter.initialized ==true);
         let admin = ctx.accounts.authority.key();

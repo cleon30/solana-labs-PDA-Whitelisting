@@ -194,7 +194,7 @@ const App = () => {
         
           console.log(PDA.toString());
           await program.methods
-          .manipulateAddress(wallet2, true)
+          .addOrRemove(wallet2, true)
           .accounts({
             authority: walletAddress.publicKey,
             counter: counterPDA,
@@ -245,7 +245,7 @@ const App = () => {
         
           console.log(PDA.toString());
           await program.methods
-          .manipulateAddress(wallet2, false)
+          .addOrRemove(wallet2, false)
           .accounts({
             authority: walletAddress.publicKey,
             counter: counterPDA,
@@ -331,7 +331,7 @@ const App = () => {
           }}>Add all addresses</button>
           <button className = "cta-button sign-button"  onClick={async () => {
             RemoveAddress();
-          }}>Remove all addresses</button>
+          }}>Remove addresses</button>
         </div>
       <input
         type="file"

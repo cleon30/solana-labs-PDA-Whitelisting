@@ -60,7 +60,7 @@
       "args": []
     },
     {
-      "name": "manipulateAddress",
+      "name": "addOrRemove",
       "accounts": [
         {
           "name": "counter",
@@ -136,6 +136,6 @@
     }
   ],
   "metadata": {
-    "address": "RwJh1Jgg8SbzibZXtj3Kze2fG5SQhPCAMPVmL6XMiAX"
+    "address": "6ytgRBXV28kgbmg7z1zsSeBZc1yTt7WU3LHQ8BxuohkJ"
   }
 }

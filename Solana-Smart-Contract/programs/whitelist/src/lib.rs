@@ -1,6 +1,6 @@
 use anchor_lang::prelude::*;
 
-declare_id!("A5oVKynECToGSJUX2ZPGHPYiuW523jKJHxvB4kSGn1eH");
+declare_id!("4ECAc1DHpPxg7L8zNGgKdropZcivxyJP4ozctMyW9rEB");
 
 const DISCRIMINATOR_LENGTH: usize = 8;
 const PUBKEY_LENGTH: usize = 32;
