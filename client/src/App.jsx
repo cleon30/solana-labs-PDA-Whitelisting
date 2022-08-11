@@ -339,7 +339,7 @@ const App = () => {
       <div className="connected-container">
         <div className = "wrap-image-thumbnail-blog">
           <div>
-            <h1 className="h1-gradient font-size-3em"> Welcome to Whitelist Contract Dashboard</h1>
+            <h1 className="h1-gradient font-size-3em">Whitelist Contract Dashboard</h1>
             {InitWhitelist()}
             {InitFetchButton()}
             <div>

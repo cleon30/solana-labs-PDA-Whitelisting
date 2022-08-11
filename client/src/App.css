@@ -158,7 +158,7 @@
   border-radius: 50%;
 
   margin-left:280px;
-  margin-top: -200px;
+  margin-top: -220px;
 
 }
 
@@ -223,6 +223,7 @@ img {
 .h1-gradient.font-size-3em {
   font-size: 1.8em;
   line-height: 1.2;
+  margin-bottom: 1.5em;
 }
 .h1-gradient.font-size-1em {
   margin-top: 2em;
