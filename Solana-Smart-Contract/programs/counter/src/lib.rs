@@ -35,11 +35,8 @@ pub mod counter {
         counter.initialized = true;
         let pointer_ctx = ctx.accounts.whitelist_ctx();
         let _ = whitelist::cpi::new_whitelist(pointer_ctx);
-      
-
         Ok(())
     }
-
 
     pub fn add_or_remove(ctx: Context<AddOrRemove>, wallet: Pubkey, remove:bool) -> Result<()> {
 
@@ -74,9 +71,6 @@ pub mod counter {
                     ctx.accounts.counter.count = count.checked_add(1).unwrap();
                     Ok(())
                     } 
-                  
-                    
-       
         }
     }
 }
