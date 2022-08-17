@@ -2,10 +2,9 @@ use anchor_lang::prelude::*;
 use whitelist::cpi::accounts::{
     AddAddress, CheckAddress, NewWhitelist, RemoveAddress,
 };
-use crate::whitelist::Wallet;
 use whitelist::program::Whitelist;
 use whitelist::{self};
-declare_id!("6ytgRBXV28kgbmg7z1zsSeBZc1yTt7WU3LHQ8BxuohkJ");
+declare_id!("GavbQDg7Yeq7FyNZRWpnG5UcHUCXdFqyb9oQiNvcLtkV");
 
 const DISCRIMINATOR_LENGTH: usize = 8;
 const PUBKEY_LENGTH: usize = 32;
@@ -17,13 +16,17 @@ pub mod counter {
 
     pub fn init_counter(ctx: Context<InitCounter>, bump:u8) -> Result<()> {
 
+        msg!("Initializing counter account...");
+        
         let counter = &mut ctx.accounts.counter;
         counter.authority = ctx.accounts.authority.key();
         counter.count = 0;
         counter.bump = bump;
         counter.program = Pubkey::default();
         counter.initialized = false;
-        
+
+        msg!("Authority set to ...{}",ctx.accounts.authority.key());
+
         Ok(())
     }
     pub fn point_to_whitelist(ctx: Context<PointWhitelist>) -> Result<()> {
@@ -33,15 +36,22 @@ pub mod counter {
         
         counter.program = ctx.accounts.whitelisting.key();
         counter.initialized = true;
-        let pointer_ctx = ctx.accounts.whitelist_ctx();
-        let _ = whitelist::cpi::new_whitelist(pointer_ctx);
+
+        msg!("Pointing Counter to a New Whitelist...{}");
+
+            let pointer_ctx = ctx.accounts.whitelist_ctx();
+            let _ = whitelist::cpi::new_whitelist(pointer_ctx);
+      
+
         Ok(())
     }
+
 
     pub fn add_or_remove(ctx: Context<AddOrRemove>, wallet: Pubkey, remove:bool) -> Result<()> {
 
         let counter = &mut ctx.accounts.counter;
         assert!(counter.initialized ==true);
+
         let admin = ctx.accounts.authority.key();
         let count = counter.count;
         let seeds= ["counter".as_bytes().as_ref(), admin.as_ref(), &[counter.bump]];
@@ -50,27 +60,45 @@ pub mod counter {
         match remove{ 
 
             true => {
+
+                msg!("Removing process started...");
+
+                    msg!("Checking that the address actually exist in the whitelist");
+
                     let check_ctx = ctx.accounts.check_ctx().with_signer(signer);
                     match whitelist::cpi::check_address(check_ctx, wallet.key()){
 
                         Ok(()) =>{
                                     let remove_ctx = ctx.accounts.remove_wallet_ctx().with_signer(signer);
                                     let _ = whitelist::cpi::remove_address(remove_ctx, wallet);
-                                    ctx.accounts.counter.count = count.checked_sub(1).unwrap();
+
+                                    msg!("-1 to the counter...");
+
+                                        ctx.accounts.counter.count = count.checked_sub(1).unwrap();
+
                                      Ok(())
                                  }
+
                         Err(e) => Err(e),
                                     
                     }
-                    },
+            },
 
             false => {
 
-                    let add_ctx = ctx.accounts.adding_new_wallet_ctx().with_signer(signer);
-                    let _ = whitelist::cpi::add_address(add_ctx, wallet);
-                    ctx.accounts.counter.count = count.checked_add(1).unwrap();
+                    msg!("Adding process started...");
+
+                        let add_ctx = ctx.accounts.adding_new_wallet_ctx().with_signer(signer);
+                        let _ = whitelist::cpi::add_address(add_ctx, wallet);
+
+                    msg!("+1 to the counter...");
+
+                        ctx.accounts.counter.count = count.checked_add(1).unwrap();
+
                     Ok(())
-                    } 
+
+            } 
+            
         }
     }
 }
@@ -141,28 +169,7 @@ pub struct AddOrRemove<'info> {
     authority: Signer<'info>,
     system_program: Program<'info, System>,
 }
-#[derive(Accounts)]
 
-pub struct UpdateCounter<'info> {
-    
-    #[account(
-        mut,
-        seeds = [
-                "counter".as_bytes().as_ref(),
-                authority.key().as_ref()
-                ],
-                bump,
-    )]
-    counter: Account<'info, Counter>,
-    pda_id: Account<'info, Wallet>,
-    wallet_address: Signer<'info>,
-    /// CHECK
-    whitelisting: AccountInfo<'info>,
-    update_id: Program<'info, Whitelist>,
-    /// CHECK
-    authority: AccountInfo<'info>,
-    system_program: Program<'info, System>,
-}
 // Data Structures
 #[account]
 pub struct Counter {
