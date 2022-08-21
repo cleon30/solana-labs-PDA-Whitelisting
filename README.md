@@ -14,6 +14,8 @@
 ## Description
 
 The Solana Whitelisting PDA contract is an open-source tool for developers in the Solana ecosystem, enabling them to create an on-chain whitelisting solution as easier as possible. 
+<img width="898" alt="image" src="https://user-images.githubusercontent.com/62452212/185815952-78ec3be5-f3e8-4cd2-97dd-8c61592df07f.png">
+
 ![image](https://user-images.githubusercontent.com/62452212/184254717-48bbc920-1663-4ef3-8f3c-bf4ae6dc1f2f.png)
 
 
