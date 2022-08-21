@@ -68,12 +68,23 @@ To deploy the smart contract to Blockchain
 ```bash
 anchor deploy
 ```
-To run the Counter testing
+## Tests
+
+For testing the Smart Contracts I have used multiple cases, with different parameters and situations when calling the functions.
+In the project you will find 3 tests inside the test directory. You will be able to run all them with ```anchor run test``` . 
+
+### Testing the Whitelist
+
+```bash
+anchor run whitelist
+```
+<img width="505" alt="image" src="https://user-images.githubusercontent.com/62452212/184933813-ee4095dd-be8b-42c5-9f2c-e86e64b284b8.png">
+
+### Testing the Counter
+
 ```bash
 anchor run counter
 ```
-<img width="748" alt="image" src="https://user-images.githubusercontent.com/62452212/183997942-6e23312b-b64e-4220-ac82-d9db65c732e9.png">
-
-
+<img width="679" alt="image" src="https://user-images.githubusercontent.com/62452212/184934015-816a72fc-fb2f-497f-8091-fc0307a29f80.png">
 
 0xCleon
