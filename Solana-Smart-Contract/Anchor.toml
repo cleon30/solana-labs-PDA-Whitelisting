@@ -4,7 +4,7 @@ seeds = false
 whitelist = "5FACFiZRqbkpLxi8SmU7vDehZ5LuhAz2vNu7uB2hJTa4"
 counter = "GavbQDg7Yeq7FyNZRWpnG5UcHUCXdFqyb9oQiNvcLtkV"
 [registry]
-url = "https://anchor.projectserum.com"
+url = "https://api.apr.dev"
 
 [provider]
 cluster = "devnet"
@@ -14,3 +14,4 @@ wallet = "~/.config/solana/id.json"
 test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"
 whitelist = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/whitelist.ts"
 counter = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/counter.ts"
+
